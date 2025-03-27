@@ -6,8 +6,24 @@ Big credits to the H-T8 team.
 Members: 
 ilpakka, ExcelAtSheets, ridicculus, lansiri, Mizard, EetHeet, d4ybreak
 
-## Official Description
+## Official 
+
+### Description
 High above Eldoria’s skyline hovers the Floating Isles. The fellowship has to retrieve the Wind Crystal from this sacred land. Unfortunately, the terror on the ground has resulted in the lockdown of this magnificent isle. Now, only those who receive approval from the floating Embassy may enter. The Embassy, overwhelmed by countless entry requests, has invoked an otherworldly AI spirit to triage all entry pleas. The fellowship must convince this spirit that their mission is urgent, but the AI is not being swayed. Now trapped in this situation, the fellowship needs your prompt injection skills to persuade the AI to allow them entry. Can you make the AI respond with the right verdict to get entry?
+
+### Skills Required
+
+- Basic understanding of AI language models
+- Familiarity with common prompt injection techniques
+- Understanding of AI model behavior and limitations
+
+### Skills Learned
+
+- Content manipulation leading to incorrect or biased outputs
+- Understanding AI model context and prompt boundaries
+- Manipulating critical decision-making processes
+
+## Additional information
 
 ### Files provided
 - None
