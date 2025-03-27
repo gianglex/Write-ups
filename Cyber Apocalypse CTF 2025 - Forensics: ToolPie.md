@@ -25,7 +25,7 @@ In the bustling town of Eastmarsh, Garrick Stoneforge’s workshop site once sto
 ## Additional information
 
 ### Files provided
-- capture.pcap
+- capture.pcap: pcap capture file - version 2.4 (Ethernet, capture length 262144) - 8412 KB
 
 
 ### Tools used
