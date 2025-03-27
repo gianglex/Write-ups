@@ -1,0 +1,184 @@
+# Cyber Apocalypse CTF 2025: ToolPie
+
+## Team H-T8
+Big credits to the H-T8 team. 
+
+Members: 
+ilpakka, ExcelAtSheets, ridicculus, lansiri, Mizard, EetHeet, d4ybreak
+
+## Official Description
+In the bustling town of Eastmarsh, Garrick Stoneforge’s workshop site once stood as a pinnacle of enchanted lock and toolmaking. But dark whispers now speak of a breach by a clandestine faction, hinting that Garrick’s prized designs may have been stolen. Scattered digital remnants cling to the compromised site, awaiting those who dare unravel them. Unmask these cunning adversaries threatening the peace of Eldoria. Investigate the incident, gather evidence, and expose Malakar as the mastermind behind this attack.
+
+### Files provided
+- capture.pcap
+
+
+### Tools used
+- WireShark
+- NetworkMiner
+- CyberChef
+
+## Flags
+
+### Preparation
+Quickly glance through information shown by WireShark and NetworkMiner. 
+
+Quick notes: 
+- 4 Hosts: 4.207.247.139, 13.61.7.218, 172.31.47.152 [13.61.177.227], 194.59.6.66
+- 9 Sessions
+- Mostly TLS 1.2 encrypted traffic
+- 6 different TCP Streams
+- 91% (923 frames) of the traffic is on 'tcp.stream eq 4'
+
+![a1](https://github.com/user-attachments/assets/70ad5898-c1b9-4ae6-80f7-7351308b1075)
+
+
+### 1. What is the IP address responsible for compromising the website?
+
+When examining frames, you can notice a suspicious looking frame on frame 71 with "POST /execute HTTP/1.1 , JSON (application/json)"
+
+![a2](https://github.com/user-attachments/assets/9bd37b91-799c-46d2-a3a4-668a5455f51f)
+
+Flag #1: **194.59.6.66**
+
+### 2. What is the name of the endpoint exploited by the attacker?
+
+As we detected during the earlier flag, the suspicious looking frame was exploiting execute endpoint.
+
+Flag #2: **execute**
+
+### 3. What is the name of the obfuscation tool used by the attacker?
+
+I started by inspecting the HTTP stream of the attack. 
+
+![b1](https://github.com/user-attachments/assets/4e57c7d4-e39d-402b-87f8-cd683d37a56d)
+
+![b2](https://github.com/user-attachments/assets/c4146663-e2f7-4752-90bb-1ba27c1b668f)
+
+After inspecting the HTTP stream, you can notice an obfuscated script. 
+
+```{"script":"try:\n    import marshal,lzma,gzip,bz2,binascii,zlib;exec(marshal.loads(bz2.decompress(b'BZh91AY&SY\\x8d*w\\x00\\x00\\n\\xbb\\x7f\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xff\\xfe\\xee\\xec\\xe4\\xec\\xec\\xc0?\\xd9\\xff\\xfe\\xf4\"|\\xf9`\\r\\xff\\x1a\\xb3\\x03\\...```
+
+Instead of Googling the whole obfuscated script, I googled the beginning and end of the script to try to identify the tool used for obfuscating. 
+
+Google: ```import marshal,lzma,gzip,bz2,binascii,zlib;exec exit```
+
+![c1](https://github.com/user-attachments/assets/0bd00dd9-3817-49d8-a366-32d778a5b9f6)
+
+IPCFScanner turned out to be a tool for scanning CIDR to find IP proxies for CF Vless. So not what we're looking for. 
+
+![c2](https://github.com/user-attachments/assets/51ca1536-015b-431f-9e4d-037068c45689)
+
+Py-Fuscate is a tool to obfuscate python programs. That seems a lot more like what we're looking for. 
+
+![c3](https://github.com/user-attachments/assets/95c56e77-d08c-425b-a9ce-f568aa452314)
+
+After seeing how it works, it produces obfuscation similar to what our code looks like. 
+
+![c4](https://github.com/user-attachments/assets/b3251872-f055-4456-a585-83cc286cbabc)
+
+With further inspecting of the python script, you can notice similarities to our obfuscated script. 
+```
+import marshal
+import lzma
+import gzip
+import bz2
+import binascii
+import zlib
+```
+
+Flag #3: **Py-fuscate**
+
+### 4. What is the IP address and port used by the malware to establish a connection with the Command and Control (C2) server?
+
+You can observe the IP address and port used by the malware by inspecting the frames (From frame 73 ->) after the the the initial exploit (frame 71). 
+
+![d1](https://github.com/user-attachments/assets/bbc8b7be-c711-4a62-bd7a-6417e9e153df)
+
+Flag #4: **13.61.7.218:55155**
+
+### 5. What encryption key did the attacker use to secure the data?
+
+Next we can start inspecting the TCP Flow from the frame (73) which we observed establishing the connection during the previous flag. 
+
+![e1](https://github.com/user-attachments/assets/e9b30469-225f-4301-a17f-06288956d9a1)
+
+![e2](https://github.com/user-attachments/assets/d42cb693-3eed-4371-b655-e95e480ce539)
+
+After inspecting the TCP flow, we can notice in plaintext the following:
+
+```
+ec2amaz-bktvi3e\administrator
+<SEPARATOR>5UUfizsRsP7oOCAq
+```
+
+Analyzing this we can assume this is EC2 instance credentials where user is ```administrator``` and encryption key is ```5UUfizsRsP7oOCAq```
+
+Flag #5: **5UUfizsRsP7oOCAq**
+
+### 6. What is the MD5 hash of the file exfiltrated by the attacker?
+
+After attaining the encryption key, we can start to attempt to decrypt the datastream. 
+
+By changing the ```Show as ASCII``` to ```Show as Raw``` we can change the filestream into a more readable form. 
+
+![f1](https://github.com/user-attachments/assets/be54a346-7fdb-43c1-a2a4-14b6aba04e3f)
+
+Since I couldn't recognize the encryption key, I decided to prompt ChatGPT with the encryption key + encrypted data hoping to get some hints to start decrypting the data. 
+
+![f2](https://github.com/user-attachments/assets/c687e9c9-df5d-4154-beb3-cd543e888571)
+
+Since we already previously established from the ```Show as ASCII``` -view, the first data is about the credentials so we can ignore it here. 
+
+```656332616d617a2d626b74766933655c61646d696e6973747261746f720a3c534550415241544f523e35555566697a73527350376f4f434171```
+```ec2amaz-bktvi3e\administrator<SEPARATOR>5UUfizsRsP7oOCAq```
+
+After tweaking and testing with different configurations, I was able to get to correct decryption settings for CyberChef through trial and error.
+
+![f3](https://github.com/user-attachments/assets/dae1d2cd-79ae-474c-8e15-4d36076f15f5)
+
+Here are the decrypted data.  
+
+```57d1caa18577d0619d841fc3169504f2```
+```check```
+
+```0dfb04561a6020ca0ef32bd7c65a0fdf```
+```check-ok```
+
+```935281f00ba6fc5b0a6f2e3e390a9149```
+```get_file```
+
+```1552feddfa035175ae8e7ab22682cfaf```
+```ok```
+
+```a10123babbc8c28f4e75670684f8840047160f00ca13bcd58f3e976f483ebf05720eaa476ba6db59ef1246d3ca76d9c386f9f9c9dca1b2cdc326252f6ad5f66a```
+```C:\Users\Administrator\Desktop\garricks_masterwork.pdf```
+
+```8696bf9d3b4cce10a748d77365a32143```
+```8504240```
+
+```1552feddfa035175ae8e7ab22682cfaf```
+```ok```
+
+From the data we can see how the computers are communicating with eachother: doing checks and then preparing to transfer the file ```C:\Users\Administrator\Desktop\garricks_masterwork.pdf``` with the size of 8504240 bytes. 
+
+The last data, which is the exfiltrated file ```garricks_masterwork.pdf``` shows up as a pdf file in CyberChef. 
+
+![f4](https://github.com/user-attachments/assets/46998e0d-bac1-450d-bb6f-2900f798e961)
+
+I could then download the file as garricks_masterwork.pdf which was a working .pdf file. 
+
+[garricks_masterwork.pdf] (File found in repo due to size)
+
+[garricks_masterwork.pdf as raw data.txt] (File found in repo due to size)
+
+After getting md5sum from the file, I was able to get the MD5 hash of the file
+```
+md5sum garricks_masterwork.pdf 
+8fde053c8e79cf7e03599d559f90b321  garricks_masterwork.pdf
+```
+
+![f5](https://github.com/user-attachments/assets/9a515d58-2465-4c1f-adaa-8a61d3dce10b)
+
+Flag #6: **8fde053c8e79cf7e03599d559f90b321**
+
