@@ -23,6 +23,8 @@ To gather the elements of Eldoria, the elven mage Eloween sought the council of 
 - Understanding AI model context and prompt boundaries
 - Manipulating AI model responses
 
+## Additional information
+
 ### Files provided
 - None
 
