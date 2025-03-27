@@ -25,7 +25,7 @@ Selene's normally secure laptop recently fell victim to a covert attack. Unbekno
 
 ### Tools used
 - volatility3
-- SQLiteBrowser
+- DB Browser for SQLite
 
 ## Flags
 Note: Scanning through the memdump takes a while
