@@ -134,6 +134,7 @@ Since we already know names of the four places, rest is just piecing them togeth
 **Flame Peaks**, **Crystal Caverns**, **Abyssal Depths**, **Floating Isles**
 
 There is only 24 possible options left. 
+
 HTB{Abyssal Depths, Crystal Caverns, Flame Peaks, Floating Isles}  
 HTB{Abyssal Depths, Crystal Caverns, Floating Isles, Flame Peaks}  
 HTB{Abyssal Depths, Flame Peaks, Crystal Caverns, Floating Isles}  
