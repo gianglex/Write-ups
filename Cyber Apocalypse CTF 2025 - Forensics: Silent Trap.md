@@ -6,12 +6,25 @@ Big credits to the H-T8 team.
 Members: 
 ilpakka, ExcelAtSheets, ridicculus, lansiri, Mizard, EetHeet, d4ybreak
 
-## Official Description
+## Official 
+
+### Description
 A critical incident has occurred in Tales from Eldoria, trapping thousands of players in the virtual world with no way to log out. The cause has been traced back to Malakar, a mysterious entity that launched a sophisticated attack, taking control of the developers' and system administrators' computers. With key systems compromised, the game is unable to function properly, which is why players remain trapped in Eldoria. Now, you must investigate what happened and find a way to restore the system, freeing yourself from the game before it's too late.
+
+### Skills Required
+- Basic IMAP protocol
+- Email/Network Forensics
+- Reverse dotnet executable
+
+### Skills Learned
+- IMAP authentication, IMAP commands
+- Examining network traffic to retrieve essential data
+- Applying AES decryption methods to uncover attacker activities
+
+## Additional information
 
 ### Files provided
 - capture.pcapng: pcapng capture file - version 1.0 - 1.7M Feb 24 09:11
-
 
 ### Tools used
 - Wireshark (and tshark)
