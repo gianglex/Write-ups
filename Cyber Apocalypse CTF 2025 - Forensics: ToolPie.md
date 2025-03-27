@@ -21,7 +21,7 @@ In the bustling town of Eastmarsh, Garrick Stoneforge’s workshop site once sto
 ## Flags
 
 ### Preparation
-Quickly glance through information shown by WireShark and NetworkMiner. 
+Glancing through information shown by WireShark and NetworkMiner. 
 
 Quick notes: 
 - 4 Hosts: 4.207.247.139, 13.61.7.218, 172.31.47.152 [13.61.177.227], 194.59.6.66
@@ -30,14 +30,14 @@ Quick notes:
 - 6 different TCP Streams
 - 91% (923 frames) of the traffic is on 'tcp.stream eq 4'
 
-![a1](https://github.com/user-attachments/assets/70ad5898-c1b9-4ae6-80f7-7351308b1075)
+<img src="https://github.com/user-attachments/assets/70ad5898-c1b9-4ae6-80f7-7351308b1075" width="500"> <br/>
 
 
 ### 1. What is the IP address responsible for compromising the website?
 
 When examining frames, you can notice a suspicious looking frame on frame 71 with "POST /execute HTTP/1.1 , JSON (application/json)"
 
-![a2](https://github.com/user-attachments/assets/9bd37b91-799c-46d2-a3a4-668a5455f51f)
+<img src="https://github.com/user-attachments/assets/9bd37b91-799c-46d2-a3a4-668a5455f51f" width="500"> <br/>
 
 Flag #1: **194.59.6.66**
 
@@ -51,9 +51,9 @@ Flag #2: **execute**
 
 I started by inspecting the HTTP stream of the attack. 
 
-![b1](https://github.com/user-attachments/assets/4e57c7d4-e39d-402b-87f8-cd683d37a56d)
+<img src="https://github.com/user-attachments/assets/4e57c7d4-e39d-402b-87f8-cd683d37a56d" width="500"> <br/>
 
-![b2](https://github.com/user-attachments/assets/c4146663-e2f7-4752-90bb-1ba27c1b668f)
+<img src="https://github.com/user-attachments/assets/c4146663-e2f7-4752-90bb-1ba27c1b668f" width="500"> <br/>
 
 After inspecting the HTTP stream, you can notice an obfuscated script. 
 
@@ -63,19 +63,19 @@ Instead of Googling the whole obfuscated script, I googled the beginning and end
 
 Google: ```import marshal,lzma,gzip,bz2,binascii,zlib;exec exit```
 
-![c1](https://github.com/user-attachments/assets/0bd00dd9-3817-49d8-a366-32d778a5b9f6)
+<img src="https://github.com/user-attachments/assets/0bd00dd9-3817-49d8-a366-32d778a5b9f6" width="500"> <br/>
 
 IPCFScanner turned out to be a tool for scanning CIDR to find IP proxies for CF Vless. So not what we're looking for. 
 
-![c2](https://github.com/user-attachments/assets/51ca1536-015b-431f-9e4d-037068c45689)
+<img src="https://github.com/user-attachments/assets/51ca1536-015b-431f-9e4d-037068c45689" width="500"> <br/>
 
 Py-Fuscate is a tool to obfuscate python programs. That seems a lot more like what we're looking for. 
 
-![c3](https://github.com/user-attachments/assets/95c56e77-d08c-425b-a9ce-f568aa452314)
+<img src="https://github.com/user-attachments/assets/95c56e77-d08c-425b-a9ce-f568aa452314" width="500"> <br/>
 
 After seeing how it works, it produces obfuscation similar to what our code looks like. 
 
-![c4](https://github.com/user-attachments/assets/b3251872-f055-4456-a585-83cc286cbabc)
+<img src="https://github.com/user-attachments/assets/b3251872-f055-4456-a585-83cc286cbabc" width="500"> <br/>
 
 With further inspecting of the python script, you can notice similarities to our obfuscated script. 
 ```
@@ -93,7 +93,7 @@ Flag #3: **Py-fuscate**
 
 You can observe the IP address and port used by the malware by inspecting the frames (From frame 73 ->) after the the the initial exploit (frame 71). 
 
-![d1](https://github.com/user-attachments/assets/bbc8b7be-c711-4a62-bd7a-6417e9e153df)
+<img src="https://github.com/user-attachments/assets/bbc8b7be-c711-4a62-bd7a-6417e9e153df" width="500"> <br/>
 
 Flag #4: **13.61.7.218:55155**
 
@@ -101,9 +101,9 @@ Flag #4: **13.61.7.218:55155**
 
 Next we can start inspecting the TCP Flow from the frame (73) which we observed establishing the connection during the previous flag. 
 
-![e1](https://github.com/user-attachments/assets/e9b30469-225f-4301-a17f-06288956d9a1)
+<img src="https://github.com/user-attachments/assets/e9b30469-225f-4301-a17f-06288956d9a1" width="500"> <br/>
 
-![e2](https://github.com/user-attachments/assets/d42cb693-3eed-4371-b655-e95e480ce539)
+<img src="https://github.com/user-attachments/assets/d42cb693-3eed-4371-b655-e95e480ce539" width="500"> <br/>
 
 After inspecting the TCP flow, we can notice in plaintext the following:
 
@@ -122,11 +122,11 @@ After attaining the encryption key, we can start to attempt to decrypt the datas
 
 By changing the ```Show as ASCII``` to ```Show as Raw``` we can change the filestream into a more readable form. 
 
-![f1](https://github.com/user-attachments/assets/be54a346-7fdb-43c1-a2a4-14b6aba04e3f)
+<img src="https://github.com/user-attachments/assets/be54a346-7fdb-43c1-a2a4-14b6aba04e3f" width="500"> <br/>
 
 Since I couldn't recognize the encryption key, I decided to prompt ChatGPT with the encryption key + encrypted data hoping to get some hints to start decrypting the data. 
 
-![f2](https://github.com/user-attachments/assets/c687e9c9-df5d-4154-beb3-cd543e888571)
+<img src="https://github.com/user-attachments/assets/c687e9c9-df5d-4154-beb3-cd543e888571" width="500"> <br/>
 
 Since we already previously established from the ```Show as ASCII``` -view, the first data is about the credentials so we can ignore it here. 
 
@@ -135,7 +135,7 @@ Since we already previously established from the ```Show as ASCII``` -view, the 
 
 After tweaking and testing with different configurations, I was able to get to correct decryption settings for CyberChef through trial and error.
 
-![f3](https://github.com/user-attachments/assets/dae1d2cd-79ae-474c-8e15-4d36076f15f5)
+<img src="https://github.com/user-attachments/assets/dae1d2cd-79ae-474c-8e15-4d36076f15f5" width="500"> <br/>
 
 Here are the decrypted data.  
 
@@ -164,7 +164,7 @@ From the data we can see how the computers are communicating with eachother: doi
 
 The last data, which is the exfiltrated file ```garricks_masterwork.pdf``` shows up as a pdf file in CyberChef. 
 
-![f4](https://github.com/user-attachments/assets/46998e0d-bac1-450d-bb6f-2900f798e961)
+<img src="https://github.com/user-attachments/assets/46998e0d-bac1-450d-bb6f-2900f798e961" width="500"> <br/>
 
 I could then download the file as garricks_masterwork.pdf which was a working .pdf file. 
 
@@ -178,7 +178,7 @@ md5sum garricks_masterwork.pdf
 8fde053c8e79cf7e03599d559f90b321  garricks_masterwork.pdf
 ```
 
-![f5](https://github.com/user-attachments/assets/9a515d58-2465-4c1f-adaa-8a61d3dce10b)
+<img src="https://github.com/user-attachments/assets/9a515d58-2465-4c1f-adaa-8a61d3dce10b" width="500"> <br/>
 
 Flag #6: **8fde053c8e79cf7e03599d559f90b321**
 
