@@ -45,7 +45,7 @@ After scrolling through the HTTP stream, I found the subject of the email.
 
 <img src="https://github.com/user-attachments/assets/5cc23df9-4918-4a70-a44c-e1022c2753d3" width="500"> <br/>
 
-Flag: ```Game Crash on Level 5```
+Flag #1: ```Game Crash on Level 5```
 
 ### 2. On what date and time was the suspicious email sent? (Format: YYYY-MM-DD_HH:MM) (for example: 1945-04-30_12:34)
 
@@ -62,7 +62,7 @@ Above it, is a .html file that you can open to read the email and it's contents.
 
 There you can clearly see the date it was sent along with the archive password ```eldoriaismylife```
 
-Flag: ```2025-02-24_15:46```
+Flag #2: ```2025-02-24_15:46```
 
 ### 3. What is the MD5 hash of the malware file?
 
@@ -76,7 +76,7 @@ After moving the file into Linux environment I extracted the file from .zip and 
 
 <img src="https://github.com/user-attachments/assets/5fff2629-0d9a-45b2-9100-47a57314b134" width="500"> <br/>
 
-Flag: ```c0b37994963cc0aadd6e78a256c51547```
+Flag #3: ```c0b37994963cc0aadd6e78a256c51547```
 
 ### 4. What credentials were used to log into the attacker's mailbox? (Format: username:password)
 
@@ -88,7 +88,7 @@ It is also possible to get the credentials with WireShark by filtering with ```I
 
 <img src="https://github.com/user-attachments/assets/94425a64-a903-44a1-a67c-e337cc440076" width="500"> <br/>
 
-Flag: ```proplayer@email.com:completed```
+Flag #4: ```proplayer@email.com:completed```
 
 ### Pitstop: Examining the malware and decrypting the emails
 
@@ -214,7 +214,7 @@ C:\Users\dev-support\Desktop>
 
 <img src="https://github.com/user-attachments/assets/6bf7d9ab-b083-4b86-97bb-bc9425bb8903" width="500"> <br/>
 
-Flag: ```Synchronization```
+Flag #5: ```Synchronization```
 
 
 ### 6. What is the API key leaked from the highly valuable file discovered by the attacker?
@@ -249,7 +249,7 @@ C:\Users\dev-support\Desktop>
 
 <img src="https://github.com/user-attachments/assets/901af2b6-a36c-49c5-9977-58f760ccfe5f" width="500"> <br/>
 
-Flag: ```sk-3498fwe09r8fw3f98fw9832fw```
+Flag #6: ```sk-3498fwe09r8fw3f98fw9832fw```
 
 
 
