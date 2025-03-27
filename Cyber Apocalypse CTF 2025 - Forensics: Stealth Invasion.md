@@ -6,12 +6,22 @@ Big credits to the H-T8 team.
 Members: 
 ilpakka, ExcelAtSheets, ridicculus, lansiri, Mizard, EetHeet, d4ybreak
 
-## Official Description
+## Official 
+
+### Description
 Selene's normally secure laptop recently fell victim to a covert attack. Unbeknownst to her, a malicious Chrome extension was stealthily installed, masquerading as a useful productivity tool. Alarmed by unusual network activity, Selene is now racing against time to trace the intrusion, remove the malicious software, and bolster her digital defenses before more damage is done.
+
+### Skills Required
+- N/A
+
+### Skills Learned
+- Volatility Basics
+- Chrome Extensions Basics
 
 ### Files provided
 - memdump.elf: ELF 64-bit LSB core file, x86-64, version 1 (SYSV)
 
+## Additional information
 
 ### Tools used
 - volatility3
