@@ -91,7 +91,7 @@ Flag #3: **Py-fuscate**
 
 ### 4. What is the IP address and port used by the malware to establish a connection with the Command and Control (C2) server?
 
-You can observe the IP address and port used by the malware by inspecting the frames (From frame 73 ->) after the the the initial exploit (frame 71). 
+You can observe the IP address and port used by the malware by inspecting the frames (from frame 73 ->) after the the the initial exploit (frame 71). 
 
 <img src="https://github.com/user-attachments/assets/bbc8b7be-c711-4a62-bd7a-6417e9e153df" width="500"> <br/>
 
