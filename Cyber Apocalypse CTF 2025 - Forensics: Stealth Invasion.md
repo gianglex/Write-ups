@@ -19,7 +19,7 @@ Selene's normally secure laptop recently fell victim to a covert attack. Unbekno
 - Chrome Extensions Basics
 
 ### Files provided
-- memdump.elf: ELF 64-bit LSB core file, x86-64, version 1 (SYSV)
+- memdump.elf: ELF 64-bit LSB core file, x86-64, version 1 (SYSV), 4.13 GB
 
 ## Additional information
 
