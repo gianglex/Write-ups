@@ -24,7 +24,7 @@ A critical incident has occurred in Tales from Eldoria, trapping thousands of pl
 ## Additional information
 
 ### Files provided
-- capture.pcapng: pcapng capture file - version 1.0 - 1.7MB
+- capture.pcapng: pcapng capture file - version 1.0 - 1.7 MB
 
 ### Tools used
 - Wireshark (and tshark)
